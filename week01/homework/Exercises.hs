@@ -14,6 +14,8 @@ import Test.HUnit
 {-
 Exercise 1: We first need to be able to break up a number into its last
 digit and the rest of the number. Fill in the functions below:
+
+Hint: These should use simple arithmetic operations.
 -}
 
 lastDigit :: Int -> Int
@@ -44,7 +46,7 @@ exercise1 =
 
 {-
 Exercise 2: Now, we can break apart a number into its digits. It is
-actually easier to break a number in to a list of its digits in reverse
+actually easier to break a number into a list of its digits in reverse
 order (can you figure out why?). Fill in the function below:
 
 For zero or negative inputs, toRevDigits should return the empty list.
@@ -81,7 +83,7 @@ exercise3 =
        ]
 
 {-
-Exercise 4: Next, we will want to sum togeether the *digits*
+Exercise 4: Next, we will want to sum together the *digits*
 in a list of integers. Fill in the function below:
 -}
 

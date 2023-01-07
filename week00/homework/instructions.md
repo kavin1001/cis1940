@@ -2,7 +2,9 @@
 
 The purpose of this assignment is to make sure you set up Haskell as soon as possible. As a result, we may ask you to do things that we won't explain in detail — just follow the steps and check that your programming environment responds as expected. Please come to office hours or post on Ed if you run into issues.
 
-**Due**: Wednesday, Jan. 18 at 10 p.m.
+**Suggested Due Date**: Monday, Jan. 16 at 10 p.m.
+
+It would be ideal if you could install Haskell before the first class, but we understand that configuring a new language can be tricky. You can submit this homework anytime before **Friday, Jan. 20** with no late penalty.
 
 ## Installation
 
@@ -18,34 +20,34 @@ The in-class exercises and homework assignments will be distributed via GitHub.
 
     You should be familiar with commands like `add, commit, status, push, pull`, so that you can use version control effectively when completing the assignments.
 
-2.  Create a new, **private** repo. Do **not** select any options under "repository template" or "initialize this repository with."
+2.  [Create](https://github.com/new) a new, **private** repo. Do **not** select any options under "repository template" or "initialize this repository with."
 
 3.  Clone your repo:
 
     ```
-    git clone git@github.com:YOURUSERNAME/YOURREPO.git
-    cd YOURREPO
+    > git clone git@github.com:YOURUSERNAME/YOURREPO.git
+    > cd YOURREPO
     ```
 
 4.  Connect to our class repo:
 
     ```
-    git remote add upstream https://github.com/jwshi21/cis1940-spring23.git
-    git fetch upstream
+    > git remote add upstream https://github.com/jwshi21/cis1940-spring23.git
+    > git fetch upstream
     ```
 
 5.  Merge the changes and push them back to GitHub:
 
     ```
-    git merge upstream/main
-    git push
+    > git merge upstream/main
+    > git push
     ```
 
 6.  Whenever there are changes to the class repo, get those changes locally, too:
 
     ```
-    git fetch upstream
-    git merge upstream/main
+    > git fetch upstream
+    > git merge upstream/main
     ```
 
     You will want to do this before each class and after each homework is released.
@@ -58,14 +60,14 @@ We will manage Haskell versions and packages using Stack.
 
 1. Install [GHCup](https://www.haskell.org/ghcup/) by following the instructions on the homepage.
 
-    Make sure to choose "yes" when asked if you want to install the Haskell Language Server and Stack.
+    Make sure to choose "yes" when asked about the Haskell Language Server and Stack.
 
-2. At this point, you should be able to run Haskell programs!
+2. At this point, you should be able to run Haskell programs! (You may need to restart the terminal for the installation to take effect.)
 
-    In the terminal, within the `week0/homework` directory, run this command to start the [REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop):
+    Within the `week0/homework` directory, run this command to start the [REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop):
 
     ```
-    stack ghci Exercises.hs
+    > stack ghci Exercises.hs
     ```
 
     Then, input `main` and press enter — this evaluates `main`. It should print out "You have installed Haskell!" There should also be an error message saying that a test failed; we will fix this in the last part.
@@ -78,7 +80,7 @@ We will use Visual Studio Code as our editor.
 
 2.  Within VSCode, install the extensions named `Haskell` and `haskell-linter`.
 
-3.  Open the command palette (`Ctrl/Cmd-Shift-P`) and go to "Preferences: Open Settings (JSON)." Paste in these settings:
+3.  Open the command palette (`Ctrl/Cmd-Shift-P`) and go to "Preferences: Open User Settings (JSON)." Paste in these settings:
 
     ```
     {
@@ -87,7 +89,7 @@ We will use Visual Studio Code as our editor.
     "haskell.hlint.run": "onSave",
     "haskell.formattingProvider": "ormolu",
     "haskell.toolchain": {
-        "hls": "1.7.0.0",
+        "hls": "1.9.0.0",
         "ghc": null,
         "cabal": null,
         "stack": null
@@ -95,15 +97,47 @@ We will use Visual Studio Code as our editor.
     "haskell.serverEnvironment": {
         "PATH": "${HOME}/.ghcup/bin:$PATH"
     },
-    "haskell.hlint.executablePath": "<path-to-hlint>"
+    "haskell.manageHLS": "GHCup"
     }
     ```
 
-    To find the path of `hlint`, you can run `which hlint` in the terminal.
-
 4.  Open the `homework` folder for `week00` in VSCode. Make sure you have this folder open — not a parent directory or individual file.
 
-5.  Go to `Exercises.hs` and complete Exercises 1 and 2, which check that the autoformatter and linter are working as expected, respectively.
+5.  Go to `Exercises.hs` and complete Exercises 0, 1, and 2, which check that the compiler, autoformatter, and linter are working as expected, respectively.
+
+6.  VSCode support for Haskell is excellent overall, but it can be finicky at times.
+
+    If Exercise 0 is not working but you are not getting an error message from VSCode, this may mean the language server hasn't "woken up" yet. Click around a bit in `Exercises.hs` until `Processing` briefly appears in the blue bar at the bottom of the screen.
+
+    Otherwise, problems often go away if you go to the command palette and run "Haskell: Restart Haskell LSP Server" or "Developer: Reload Window."
+
+7.  If Exercise 2 does not work, try the following. Run
+
+    ```
+    > stack install hlint
+    ```
+
+    and take note of the message at the end saying where `hlint` was installed.
+
+    Then add that path to the user settings above.
+
+    ```
+    "haskell.hlint.executablePath": "<path-to-hlint>"
+    ```
+
+    This should allow you to see the message in Exercise 2.
+
+    However, it is likely that you will get an error when you try to _apply_ the hint. Tragically, there seems to be a [bug](https://github.com/haskell/haskell-language-server/issues/3241) at the moment. Two options:
+
+    -   You can choose not to use this feature and instead apply hints manually — that is, replace the incorrectly styled code under the "Found:" heading with the correctly styled code under the "Why not:" heading.
+
+    -   Or, you can follow this fix, which takes a while to run (since you are re-compiling the language server from scratch) but allows you to apply hints automatically:
+
+        ```
+        > cabal update
+        > ghcup rm hls 1.9.0.0
+        > ghcup compile hls -v 1.9.0.0 --git-ref master --ghc 9.2.5
+        ```
 
 ## Submission
 
@@ -112,7 +146,7 @@ Now that we have our basic setup, we will walk through the workflow of completin
 1. Start GHCi with
 
     ```
-    stack ghci Exercises.hs
+    > stack ghci Exercises.hs
     ```
 
     Run `main`. It should give the same message as before.
