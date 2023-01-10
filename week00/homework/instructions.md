@@ -136,7 +136,7 @@ We will use Visual Studio Code as our editor.
         ```
         > cabal update
         > ghcup rm hls 1.9.0.0
-        > ghcup compile hls -v 1.9.0.0 --git-ref master --ghc 9.2.5
+        > ghcup compile hls --git-ref master --ghc 9.2.5
         ```
 
 ## Submission
