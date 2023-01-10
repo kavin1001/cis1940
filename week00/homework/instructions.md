@@ -6,6 +6,8 @@ The purpose of this assignment is to make sure you set up Haskell as soon as pos
 
 It would be ideal if you could install Haskell before the first class, but we understand that configuring a new language can be tricky. You can submit this homework anytime before **Friday, Jan. 20** with no late penalty.
 
+P.S. I called this a "homework" with "exercises" to be consistent with future assignments, but it's really just a detailed instruction guide to make sure you have everything set up correctly. No cognitive effort required :) 
+
 ## Installation
 
 The Git instructions are a strong suggestion. The Haskell instructions are _requirements_: we will expect you to use Stack and VSCode, and we will not help you if you encounter problems due to using a different setup.
@@ -155,4 +157,4 @@ Now that we have our basic setup, we will walk through the workflow of completin
 
 3. In GHCi, input `:r` to reload the file. Run `main` again. The test should pass now.
 
-4. Submit only `Exercises.hs` to Gradescope. It should pass the autograder test for Exercise 3. We will manually grade Exercises 1 and 2.
+4. Submit only `Exercises.hs` to Gradescope. It should pass the autograder test for Exercise 3.
