@@ -66,7 +66,7 @@ We will manage Haskell versions and packages using Stack.
 
 2. At this point, you should be able to run Haskell programs! (You may need to restart the terminal for the installation to take effect.)
 
-    Within the `week0/homework` directory, run this command to start the [REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop):
+    Within the `week00/homework` directory, run this command to start the [REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop):
 
     ```
     > stack ghci Exercises.hs
