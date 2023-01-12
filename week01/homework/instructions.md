@@ -44,6 +44,12 @@ When all tests pass, the output will be
 Cases: 23  Tried: 23  Errors: 0  Failures: 0
 ```
 
+You can also execute the tests for an individual exercise (for example, Exercise 1) with
+
+```
+Prelude> runTestTT exercise1
+```
+
 ## Grading
 
 This homework will be graded out of 20 points. You will receive three points for each
