@@ -19,10 +19,10 @@ Hint: These should use simple arithmetic operations.
 -}
 
 lastDigit :: Int -> Int
-lastDigit = error "unimplemented"
+lastDigit n = n `mod` 10
 
 dropLastDigit :: Int -> Int
-dropLastDigit = error "unimplemented"
+dropLastDigit n = n `div` 10
 
 {- Here, we have some tests written using Haskell's unit testing library.
    For example, the first one says the result of (lastDigit 1234) should be 4.
