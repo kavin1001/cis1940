@@ -111,7 +111,7 @@ you defined in previous exercises.
 -}
 
 validate :: Int -> Bool
-validate = error "unimplemented"
+validate n = sumDigits (doubleEveryOther (toRevDigits n)) `mod` 10 == 0
 
 exercise5 :: Test
 exercise5 =
@@ -127,7 +127,7 @@ comments, feel free to also write them here.
 -}
 
 time :: Double
-time = error "unimplemented"
+time = 1.5
 
 exercise6 :: Test
 exercise6 = TestCase (assertBool "fill in any time" (time >= 0))
