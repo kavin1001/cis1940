@@ -53,7 +53,7 @@ For zero or negative inputs, toRevDigits should return the empty list.
 -}
 
 toRevDigits :: Int -> [Int]
-toRevDigits = error "unimplemented"
+toRevDigits n = if n <= 0 then [] else lastDigit n : toRevDigits (dropLastDigit n)
 
 exercise2 :: Test
 exercise2 =
@@ -70,7 +70,9 @@ double every other one from left to right. Fill in the function below:
 -}
 
 doubleEveryOther :: [Int] -> [Int]
-doubleEveryOther = error "unimplemented"
+doubleEveryOther [] = []
+doubleEveryOther [x] = [x]
+doubleEveryOther (x : y : zs) = x : y * 2 : doubleEveryOther zs
 
 exercise3 :: Test
 exercise3 =
@@ -88,7 +90,9 @@ in a list of integers. Fill in the function below:
 -}
 
 sumDigits :: [Int] -> Int
-sumDigits = error "unimplemented"
+sumDigits [] = 0
+sumDigits [xs] = sum (toRevDigits xs)
+sumDigits (x : xs) = sum (toRevDigits x) + sumDigits xs
 
 exercise4 :: Test
 exercise4 =
