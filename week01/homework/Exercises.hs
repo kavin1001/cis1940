@@ -15,7 +15,7 @@ import Test.HUnit
 Exercise 1: We first need to be able to break up a number into its last
 digit and the rest of the number. Fill in the functions below:
 
-Hint: These should use simple arithmetic operations.
+Hint: Use `mod` for the first function and `div` for the second.
 -}
 
 lastDigit :: Int -> Int
