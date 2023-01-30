@@ -1,5 +1,6 @@
 module Exercises where
 
+import GHC.Float (minusDouble)
 import Test.HUnit
   ( Test (..),
     assertBool,
@@ -19,7 +20,9 @@ data Nat
   deriving (Show, Eq)
 
 even :: Nat -> Bool
-even = error "unimplemented"
+even Z = True
+even (S Z) = False
+even (S (S n)) = even n
 
 exercise1a :: Test
 exercise1a =
@@ -31,7 +34,10 @@ exercise1a =
        ]
 
 max :: Nat -> Nat -> Nat
-max = error "unimplemented"
+max Z Z = Z
+max (S n) Z = S n
+max Z (S n) = S n
+max (S a) (S b) = S (max a b)
 
 exercise1b :: Test
 exercise1b =
@@ -50,7 +56,9 @@ data Arith
   deriving (Show, Eq)
 
 eval :: Arith -> Int
-eval = error "unimplemented"
+eval (Num a) = a
+eval (Add a b) = eval a + eval b
+eval (Mul a b) = eval a * eval b
 
 exercise2a :: Test
 exercise2a =
@@ -61,7 +69,10 @@ exercise2a =
        ]
 
 opt0 :: Arith -> Arith
-opt0 = error "unimplemented"
+opt0 (Num a) = Num a
+opt0 (Add (Num 0) a) = opt0 a
+opt0 (Add a b) = Add (opt0 a) (opt0 b)
+opt0 (Mul a b) = Mul (opt0 a) (opt0 b)
 
 exercise2b :: Test
 exercise2b =
@@ -80,9 +91,15 @@ data Empty
   Is it possible to write a function of type Empty -> Int?
   If so, write one! If not, briefly explain why. -}
 
+exercise3a :: Empty -> Int
+exercise3a _ = 0
+
 {- Question:
   Is it possible to write a function of type Int -> Empty?
   If so, write one! If not, briefly explain why. -}
+
+-- I don't think it is possible to write a function with this type signature because the type
+-- Empty has no constructors, so there is no way to create a value of type Empty.
 
 ---- end of exercises ----
 
@@ -91,7 +108,7 @@ it took you to complete this homework. If you have any
 comments, feel free to also write them here. -}
 
 time :: Double
-time = error "unimplemented"
+time = 2.0
 
 checkTime :: Test
 checkTime = TestCase (assertBool "fill in any time" (time >= 0))
