@@ -66,7 +66,7 @@ To test your reimplementations, make sure this script works in GHCi:
 ```
 ghci> putStr' "hello, world!"
 hello, world!ghci> putStrLn' "hello again"
-hello,again
+hello again
 ghci> print' 3
 3
 ```
