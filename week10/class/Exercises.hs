@@ -2,13 +2,6 @@ module Exercises where
 
 import Test.QuickCheck
 
-genList :: Arbitrary a => Gen [a]
-genList =
-  frequency
-    [ (1, return []),
-      (4, (:) <$> arbitrary <*> arbitrary)
-    ]
-
 -- Source: https://wiki.haskell.org/Introduction#Quicksort_in_Haskell
 sort :: [Int] -> [Int]
 sort [] = []
