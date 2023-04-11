@@ -29,7 +29,7 @@ test_ident :: Test
 test_ident =
   TestList
     [ doParse ident "foo bar" ~?= Just ("foo", " bar"),
-      doParse ident "foo1d3nt" ~?= Nothing, -- idents can't contain numbers
+      doParse ident "13" ~?= Nothing, -- identifiers can't be numbers
       doParse ident " " ~?= Nothing,
       doParse ident "" ~?= Nothing
     ]
@@ -82,7 +82,6 @@ test_SExprParser =
   TestList
     [ doParse sExprParser "" ~?= Nothing,
       doParse sExprParser "5" ~?= Just (Atom (Num 5), ""),
-      doParse sExprParser "foo3" ~?= Just (Atom (Ident "foo3"), ""),
       doParse sExprParser "(bar (foo) 3 5 874)"
         ~?= Just
           ( Comb
@@ -127,17 +126,11 @@ printSExpr = PP.render . pretty
 -- QuickCheck generators for S-Expressions
 -- (You do not need to understand how these generators are implemented!)
 
--- | Generator that generates random non-empty strings up to length 5 only containing
--- alphanumeric characters
-smallString :: Gen String
-smallString = QC.resize 5 $ QC.listOf1 (QC.elements $ ['a' .. 'z'] ++ ['0' .. '9'])
-
--- Generator of Idents
+-- | Generator of Idents
+-- Specifically, this generator produces random non-empty strings up to length 5 only containing
+-- alphabetic characters
 genIdent :: Gen String
-genIdent = do
-  firstChar <- QC.elements ['a' .. 'z']
-  remainder <- smallString
-  return (firstChar : remainder)
+genIdent = QC.resize 5 $ QC.listOf1 (QC.elements ['a' .. 'z'])
 
 -- Generator of Atoms
 genAtom :: Gen SExprAtom
