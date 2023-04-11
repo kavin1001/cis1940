@@ -13,7 +13,10 @@ newtype Poly = P [Int]
 
 instance Eq Poly where
   (==) :: Poly -> Poly -> Bool
-  (==) = error "unimplemented"
+  P [] == P [] = True
+  P [] == P xs = length (nub xs) == 1 && head xs == 0
+  P xs == P [] = length (nub xs) == 1 && head xs == 0
+  P (a : as) == P (b : bs) = (a == b) && P as == P bs
 
 exercise1 :: Test
 exercise1 =
@@ -29,14 +32,26 @@ exercise1 =
 
 instance Show Poly where
   show :: Poly -> String
-  show = error "unimplemented"
+  show (P xs) | length (nub xs) == 1 && head xs == 0 = "0"
+  show (P []) = "0"
+  show (P xs) = intercalate " + " (zipWith showTerm xs [0 ..])
+    where
+      showTerm :: Int -> Int -> String
+      showTerm 0 0 = ""
+      showTerm (-1) 0 = "-1"
+      showTerm (-1) 1 = "-x"
+      showTerm (-1) n = "-x^" ++ show n
+      showTerm c 0 = show c
+      showTerm c 1 = show c ++ "x"
+      showTerm c n = show c ++ "x^" ++ show n
 
 exercise2 :: Test
 exercise2 =
   "show"
     ~: [ show (P [1, 2, 3]) ~?= "1 + 2x + 3x^2",
          show (P [-1, 0]) ~?= "-1 + 0x",
-         show (P []) ~?= "0"
+         show (P []) ~?= "0",
+         show (P [0, 0, 0]) ~?= "0"
        ]
 
 -- Exercise 3
@@ -53,10 +68,10 @@ instance Num Poly where
   -- Implement these now.
 
   negate :: Poly -> Poly
-  negate = error "unimplemented"
+  negate (P xs) = P (map negate xs)
 
   fromInteger :: Integer -> Poly
-  fromInteger = error "unimplemented"
+  fromInteger x = P [fromInteger x]
 
   -- Leave these unimplemented;
   -- no meaningful definition exists.
@@ -85,7 +100,10 @@ exercise3b =
 -- Exercise 4
 
 plus :: Poly -> Poly -> Poly
-plus = error "unimplemented"
+plus (P c1s) (P c2s) = P (zipWith (+) (pad c1s c2s) (pad c2s c1s))
+  where
+    pad :: [Int] -> [Int] -> [Int]
+    pad a b = a ++ replicate (length b - length a) 0
 
 exercise4 :: Test
 exercise4 =
@@ -99,7 +117,11 @@ exercise4 =
 -- Exercise 5
 
 times :: Poly -> Poly -> Poly
-times = error "unimplemented"
+times (P c1) (P c2) = sum (go c1 c2)
+  where
+    go :: [Int] -> [Int] -> [Poly]
+    go [] _ = []
+    go (c1 : c1s) c2s = P (map (* c1) c2s) : go c1s (0 : c2s)
 
 exercise5 :: Test
 exercise5 =
@@ -125,7 +147,7 @@ it took you to complete this homework. If you have any
 comments, feel free to also write them here. -}
 
 time :: Double
-time = error "unimplemented"
+time = 2.25
 
 checkTime :: Test
 checkTime = TestCase (assertBool "fill in any time" (time >= 0))
@@ -140,7 +162,7 @@ have used hints on most or all of the problems.
 -}
 
 hints :: [Bool]
-hints = error "unimplemented" -- [False, False, False, False, False]
+hints = [True, True, False, True, True]
 
 checkHints :: Test
 checkHints = TestCase (assertBool "fill in hint info" (length hints == 5))

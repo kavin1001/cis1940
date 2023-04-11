@@ -16,7 +16,7 @@ instance Arbitrary Tree where
     where
       genTree :: Int -> Int -> Gen Tree
       genTree lower upper
-        | lower > upper = error "unimplemented"
+        | lower > upper = 
         | otherwise = error "unimplemented"
 
 prop_ArbitraryValid :: Tree -> Bool
@@ -37,4 +37,4 @@ it took you to complete this homework. If you have any
 comments, feel free to also write them here. -}
 
 time :: Double
-time = error "unimplemented"
+time = 3.0

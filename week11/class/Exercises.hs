@@ -11,7 +11,13 @@ import Text.Read (readMaybe)
 -- Exercise 1: Write a parser that parses one single digit
 
 oneDigit :: Parser Int
-oneDigit = undefined "TODO"
+oneDigit = P $ \s ->
+  case s of
+    (c : cs) ->
+      case readMaybe [c] of
+        Just n -> Just (n, cs)
+        Nothing -> Nothing
+    [] -> Nothing 
 
 -- Test cases for `oneDigit`
 -- Test by typing `runTestTT test_oneDigit` into GHCi
@@ -29,7 +35,7 @@ test_oneDigit =
 ----------------------------------------------------------------------------------------------------------------
 -- Exercise 2: Write a parser that takes an existing parser, and parses between parentheses
 parenP :: Parser a -> Parser a
-parenP p = undefined "TODO"
+parenP p = char '(' *> p <* char ')'
 
 -- Here are some helper parsers for you to test parenP (there are more in `Parser.hs`)
 -- The parser `get` parses one single char

@@ -11,11 +11,12 @@ import Text.Read (readMaybe)
 -- Exercise 1
 
 isGood :: String -> Bool
-isGood = isJust . go
-  where
-    -- go evaluates to (Just "") on success, or Nothing otherwise
-    go :: String -> Maybe String
-    go = error "unimplemented"
+isGood "" = True
+isGood s = case readMaybe [head s] of
+  Just n -> do
+    let prefix = replicate n 'a'
+    maybe False isGood (stripPrefix prefix (tail s))
+  Nothing -> False
 
 exercise1 :: Test
 exercise1 =
@@ -27,10 +28,14 @@ exercise1 =
 -- Exercise 2
 
 sumsTo :: Int -> [(Int, Int)]
-sumsTo = error "unimplemented"
+sumsTo x = do
+  a <- [0 .. x]
+  let b = x - a
+  guard (b >= 0)
+  return (a, b)
 
 sumsTo' :: Int -> [(Int, Int)]
-sumsTo' = error "unimplemented"
+sumsTo' n = [(x, y) | x <- [0 .. n], y <- [0 .. n], x + y == n]
 
 exercise2 :: Test
 exercise2 =
@@ -44,13 +49,19 @@ exercise2 =
 -- Exercise 3
 
 join :: Monad m => m (m a) -> m a
-join = error "unimplemented"
+join mma = do
+  ma <- mma
+  ma
 
 liftM :: Monad m => (a -> b) -> m a -> m b
-liftM = error "unimplemented"
+liftM f ma = do
+  a <- ma
+  return (f a)
 
 (>=>) :: Monad m => (a -> m b) -> (b -> m c) -> a -> m c
-(>=>) = error "unimplemented"
+f >=> g = \a -> do
+  b <- f a
+  g b
 
 ---- end of exercises ----
 
@@ -59,7 +70,7 @@ it took you to complete this homework. If you have any
 comments, feel free to also write them here. -}
 
 time :: Double
-time = error "unimplemented"
+time = 3.5
 
 checkTime :: Test
 checkTime = TestCase (assertBool "fill in any time" (time >= 0))

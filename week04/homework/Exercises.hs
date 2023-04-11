@@ -1,5 +1,6 @@
 module Exercises where
 
+import GHC.Base (unIO)
 import Test.HUnit
 import Prelude hiding (concat, concatMap)
 
@@ -8,7 +9,7 @@ import Prelude hiding (concat, concatMap)
 -- Exercise 1:
 
 safeLast :: [a] -> Maybe a
-safeLast = error "unimplemented"
+safeLast = foldr(\x acc -> if null acc then Just x else acc) Nothing
 
 exercise1 :: Test
 exercise1 =
@@ -21,7 +22,7 @@ exercise1 =
 -- Exercise 2:
 
 concat' :: [[a]] -> [a]
-concat' = error "unimplemented"
+concat' = foldr (++) []
 
 exercise2a :: Test
 exercise2a =
@@ -32,7 +33,7 @@ exercise2a =
        ]
 
 concatMap' :: (a -> [b]) -> [a] -> [b]
-concatMap' = error "unimplemented"
+concatMap' a = concat' . map a
 
 exercise2b :: Test
 exercise2b =
@@ -54,7 +55,7 @@ func (x : xs)
   | otherwise = func xs
 
 func' :: [Int] -> Int
-func' = error "unimplemented"
+func' x = foldr (\x acc -> if even x then (x - 2) * acc else acc) 1 x
 
 ---- end of exercises ----
 
@@ -63,7 +64,7 @@ it took you to complete this homework. If you have any
 comments, feel free to also write them here. -}
 
 time :: Double
-time = error "unimplemented"
+time = 2
 
 checkTime :: Test
 checkTime = TestCase (assertBool "fill in any time" (time >= 0))

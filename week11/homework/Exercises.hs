@@ -22,7 +22,7 @@ import Prelude hiding ((<>))
 ------------------------------------------------------------
 
 ident :: Parser String
-ident = undefined "TODO"
+ident = P.oneOrMore (P.satisfy isAlpha)
 
 -- Check by typing `runTestTT test_ident` into GHCi
 test_ident :: Test
@@ -43,7 +43,7 @@ data SExprAtom = Num Int | Ident String
   deriving (Show, Eq)
 
 atomParser :: Parser SExprAtom
-atomParser = undefined "TODO"
+atomParser = Num <$> P.int <|> Ident <$> ident
 
 -- Check by typing `runTestTT test_atomParser` into GHCi
 test_atomParser :: Test
@@ -64,8 +64,7 @@ data SExpr
   deriving (Show, Eq)
 
 sExprParser :: Parser SExpr
-sExprParser = spacesP (undefined "TODO")
-
+sExprParser = undefined "TODO"
 -- Takes a parser and parses between parentheses
 parenP :: Parser a -> Parser a
 parenP p = P.char '(' *> p <* P.char ')'

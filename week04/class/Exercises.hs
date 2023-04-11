@@ -1,5 +1,8 @@
 module Exercises where
 
+import Prelude hiding (all, and)
+
+
 {-
 Exercise 1:
 
@@ -33,7 +36,7 @@ Try to write these as concisely as possible.
 -}
 
 and :: [Bool] -> Bool
-and = error "unimplemented"
+and = foldr (&&) True 
 
 all :: (a -> Bool) -> [a] -> Bool
-all = error "unimplemented"
+all a b = foldr ((&&) . a) True b

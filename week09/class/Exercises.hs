@@ -24,9 +24,9 @@ Exercise:
 Get the third element of a list. Use safeHead and safeTail.
 e.g. [1, 2, 3, 4] -> Just 3 and [1, 2] -> Nothing.
 -}
-
+-- Get the third element of a list. Use safeHead and safeTail. e.g. [1, 2, 3, 4] -> Just 3 and [1, 2] -> Nothing.
 safeThird :: [a] -> Maybe a
-safeThird = error "unimplemented"
+safeThird x = error "unimplemented"
 
 safeHead :: [a] -> Maybe a
 safeHead [] = Nothing
@@ -56,7 +56,7 @@ e.g. 15 -> [1, 3, 5, 15]
 -}
 
 factors :: Int -> [Int]
-factors = error "unimplemented"
+factors n = [x | x <- [1..n], n `mod` x == 0]
 
 -------
 
@@ -68,7 +68,9 @@ The second time, use sequence (and another function).
 -}
 
 mapM' :: Monad m => (a -> m b) -> [a] -> m [b]
-mapM' = error "unimplemented"
+-- implement this using recursion
+mapM' x = error "unimplemented"
+
 
 mapM'' :: Monad m => (a -> m b) -> [a] -> m [b]
-mapM'' = error "unimplemented"
+mapM'' = 

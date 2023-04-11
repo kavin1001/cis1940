@@ -14,24 +14,32 @@ prog = do
   print (n * n)
   return n
 
-prog' :: IO ()
-prog' = error "unimplemented"
+prog' :: IO Int
+prog' =
+  putStr "Say something: "
+    >> getLine
+    >>= \input ->
+      let n = length input
+       in print (n * n)
+            >> return n
 
 -- Exercise 2
 
 q1 :: Bool
-q1 = error "unimplemented"
+q1 = True
 
 q2 :: Bool
-q2 = error "unimplemented"
+q2 = False
 
 q3 :: Bool
-q3 = error "unimplemented"
+q3 = True
 
 -- Exercise 3
 
 lengthFile :: FilePath -> IO Int
-lengthFile = error "unimplemented"
+lengthFile x = do
+  contents <- readFile x
+  return (length contents)
 
 exercise3a :: Test
 exercise3a =
@@ -42,7 +50,10 @@ exercise3a =
        ]
 
 concatFiles :: [FilePath] -> FilePath -> IO ()
-concatFiles = error "unimplemented"
+-- use mapM
+concatFiles inputFiles outputFile = do
+  fileContents <- mapM readFile inputFiles
+  writeFile outputFile (concat fileContents)
 
 exercise3b :: Test
 exercise3b =
@@ -56,13 +67,18 @@ exercise3b =
 -- Exercise 4
 
 putStr' :: String -> IO ()
-putStr' = error "unimplemented"
+putStr' [] = return ()
+putStr' (x : xs) = do
+  putChar x
+  putStr' xs
 
 putStrLn' :: String -> IO ()
-putStrLn' = error "unimplemented"
+putStrLn' x = do
+  putStr' x
+  putChar '\n'
 
 print' :: Show a => a -> IO ()
-print' = error "unimplemented"
+print' x = putStrLn' (show x)
 
 ---- end of exercises ----
 
@@ -71,7 +87,7 @@ it took you to complete this homework. If you have any
 comments, feel free to also write them here. -}
 
 time :: Double
-time = error "unimplemented"
+time = 2.5
 
 checkTime :: Test
 checkTime = TestCase (assertBool "fill in any time" (time >= 0))
